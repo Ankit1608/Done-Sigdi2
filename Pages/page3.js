@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 
-export default function Page3({navigation}) {
+export default function Page3({navigation, route}) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container2}>
@@ -26,7 +26,8 @@ export default function Page3({navigation}) {
         <Text style={styles.text2}>order now</Text>
       </View>
       <View style={styles.page3container4}>
-        <TouchableNativeFeedback onPress={() => navigation.navigate('page4')}>
+        <TouchableNativeFeedback
+          onPress={() => route.params.setSlideLoad(false)}>
           <View style={styles.page3signupcontainer}>
             <Text style={styles.signuptext}>Sign up</Text>
           </View>

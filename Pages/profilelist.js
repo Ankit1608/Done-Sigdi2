@@ -7,6 +7,7 @@ import {
   View,
   StatusBar,
   TouchableNativeFeedback,
+  Pressable,
 } from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
@@ -96,11 +97,14 @@ export default function Profilelist({navigation, route}) {
           />
           <Text style={styles.listtext}>Rate us on Play Store</Text>
         </View>
-        <TouchableNativeFeedback onPress={route.params.signOut()}>
+        <Pressable
+          onPress={() => {
+            route.params.signOut();
+          }}>
           <View style={styles.listitem}>
             <Text style={styles.logout}>Log Out</Text>
           </View>
-        </TouchableNativeFeedback>
+        </Pressable>
       </View>
     </SafeAreaView>
   );

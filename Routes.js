@@ -30,16 +30,25 @@ import SellIcon from './assets/JSX_SVG/sell_icon';
 import SearchIcon from './assets/JSX_SVG/searchIcon';
 import ProfileIcon from './assets/JSX_SVG/profileicon';
 import OrderIcon from './assets/JSX_SVG/orderIcon';
-import AuthFlow from './container/authflow';
 import SellDrawer from './Pages/selltabnavigation';
 import {
   Text,
   TextInput,
-  TouchableNativeFeedback,
   View,
   StyleSheet,
+  SafeAreaView,
+  Image,
+  Platform,
+  ScrollView,
+  Dimensions,
+  Pressable,
+  ImageBackground,
 } from 'react-native';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
+import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 
+const windowHeight = Dimensions.get('window').height;
 const NOTSIGNIN = 'You are NOT logged in';
 const SIGNEDIN = 'You have logged in successfully';
 const SIGNEDOUT = 'You have logged out successfully';
@@ -54,7 +63,16 @@ export default function Routes() {
   const [session, setSession] = useState(null);
   const [otp, setOtp] = useState('');
   const [number, setNumber] = useState('');
+  const [slideload, setSlideLoad] = useState(true);
   const password = Math.random().toString(10) + 'Abc#';
+
+  const phoneRegExp = /^[6-9]\d{9}$/;
+  const validationSchema = Yup.object().shape({
+    phonenumber: Yup.string()
+      .required()
+      .matches(phoneRegExp, 'Phone number is not valid')
+      .label('Phone Number'),
+  });
   useEffect(() => {
     verifyAuth();
   }, []);
@@ -81,10 +99,10 @@ export default function Routes() {
       setMessage(NOTSIGNIN);
     }
   };
-  const signIn = (number1) => {
+  const signIn = (num) => {
     setMessage(VERIFYNUMBER);
-    console.log(number1);
-    Auth.signIn('+918686959744')
+    console.log('bl' + num);
+    Auth.signIn(num)
       .then((result) => {
         setSession(result);
         setMessage(WAITINGFOROTP);
@@ -113,9 +131,9 @@ export default function Routes() {
       .catch((e) => console.log(e));
     return result;
   };
-  const verifyOtp = (pin) => {
-    console.log('inside' + pin);
-    Auth.sendCustomChallengeAnswer(session, pin)
+  const verifyOtp = (op) => {
+    console.log('inside' + op);
+    Auth.sendCustomChallengeAnswer(session, op)
       .then((user) => {
         setUser(user);
         setMessage(SIGNEDIN);
@@ -134,14 +152,11 @@ export default function Routes() {
       }}>
       <Stack.Screen name="page1" component={Page1} />
       <Stack.Screen name="page2" component={Page2} />
-      <Stack.Screen name="page3" component={Page3} />
       <Stack.Screen
-        name="page4"
-        component={Page4}
+        name="page3"
+        component={Page3}
         initialParams={{
-          setNumber: setNumber,
-          signIn: signIn,
-          setSession: setSession,
+          setSlideLoad: setSlideLoad,
         }}
       />
     </Stack.Navigator>
@@ -205,7 +220,9 @@ export default function Routes() {
         options={{headerShown: false}}
         name="Profilelist"
         component={Profilelist}
-        initialParams={{signOut: signOut}}
+        initialParams={{
+          signOut: signOut,
+        }}
       />
       <Stack.Screen name="Edit Profile" component={ProfileEdit} />
       <Stack.Screen name="Address Book" component={ProfileAddress} />
@@ -215,8 +232,130 @@ export default function Routes() {
   );
   return (
     <NavigationContainer>
-      {!user && !session && <Slideshow1 />}
-      {!user && session && <Slideshow2 />}
+      {!user && !session && slideload && <Slideshow1 />}
+      {!user && !session && !slideload && (
+        <SafeAreaView style={styles.page4container}>
+          <ScrollView>
+            <View style={styles.page4container2}>
+              <Image
+                style={styles.page4imgcontainer}
+                source={require('./assets/illustration.png')}
+              />
+              <Formik
+                initialValues={{phonenumber: ''}}
+                onSubmit={(values) => {
+                  console.warn('nkln');
+                  let number = '+91' + values.phonenumber;
+                  setNumber(number);
+                  signIn(number);
+                }}
+                validationSchema={validationSchema}>
+                {({handleChange, handleSubmit, errors}) => (
+                  <>
+                    <TextInput
+                      style={styles.page4phonenumberinput}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      placeholder="Phone Number"
+                      placeholderTextColor="#CBC8C8"
+                      keyboardType="numeric"
+                      maxLength={10}
+                      textContentType="telephoneNumber"
+                      onChangeText={handleChange('phonenumber')}
+                    />
+                    <Text style={{color: 'red'}}>{errors.phonenumber}</Text>
+                    <Pressable onPress={handleSubmit}>
+                      <View style={styles.page4otpbutton}>
+                        <Text style={{color: 'white', fontSize: 18}}>
+                          SEND OTP
+                        </Text>
+                      </View>
+                    </Pressable>
+                  </>
+                )}
+              </Formik>
+            </View>
+            <View style={styles.page4termscontainer}>
+              <View style={styles.page4termscontainer2}>
+                <Text style={styles.page4text}>
+                  By continuing, you agree to our
+                </Text>
+                <Text style={styles.page4text}>
+                  Terms of serivce PrivacyPolicy Content Policy
+                </Text>
+                <View style={styles.page4botttomborder} />
+              </View>
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      )}
+      {!user && session && (
+        <SafeAreaView style={styles.page5container}>
+          <ImageBackground
+            style={styles.profileimgcontainer}
+            source={require('./assets/bgotp.png')}>
+            <ScrollView>
+              <View style={styles.page5heading}>
+                <Text style={styles.page5headingotp}>VERIFY OTP</Text>
+                <Text style={styles.page5headingotp2}>
+                  Please type the verification code sent to yout registered
+                  number
+                </Text>
+              </View>
+              <Formik
+                initialValues={{pin1: '', pin2: '', pin3: '', pin4: ''}}
+                onSubmit={async (values) => {
+                  let pin = String(
+                    values.pin1 + values.pin2 + values.pin3 + values.pin4,
+                  );
+                  setOtp(pin);
+                  verifyOtp(pin);
+                }}>
+                {({handleChange, handleSubmit, errors}) => (
+                  <>
+                    <View style={styles.page5otpcontainer}>
+                      <TextInput
+                        keyboardType="numeric"
+                        style={styles.textInput}
+                        maxLength={1}
+                        onChangeText={handleChange('pin1')}></TextInput>
+                      <TextInput
+                        keyboardType="numeric"
+                        style={styles.textInput}
+                        maxLength={1}
+                        onChangeText={handleChange('pin2')}></TextInput>
+                      <TextInput
+                        keyboardType="numeric"
+                        style={styles.textInput}
+                        maxLength={1}
+                        onChangeText={handleChange('pin3')}></TextInput>
+                      <TextInput
+                        keyboardType="numeric"
+                        style={styles.textInput}
+                        maxLength={1}
+                        onChangeText={handleChange('pin4')}></TextInput>
+                    </View>
+
+                    <View style={styles.page5buttoncontainer}>
+                      <Pressable onPress={handleSubmit}>
+                        <View style={styles.page5Verifynowcontainer}>
+                          <Text style={styles.page5Verifynowbutton}>
+                            Verify Now
+                          </Text>
+                        </View>
+                      </Pressable>
+
+                      <Text style={styles.page5Resendcodebutton}>
+                        Resend code
+                      </Text>
+                    </View>
+                  </>
+                )}
+              </Formik>
+            </ScrollView>
+          </ImageBackground>
+        </SafeAreaView>
+      )}
       {user && !session && (
         <Tab.Navigator>
           <Tab.Screen
@@ -282,5 +421,129 @@ const styles = StyleSheet.create({
     marginTop: 15,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  page4container: {
+    flex: 1,
+    backgroundColor: '#3C2022',
+    marginTop: Platform.OS === 'android' ? 0 : 0,
+    overflow: 'hidden',
+  },
+  page4container2: {
+    alignItems: 'center',
+  },
+  page4imgcontainer: {
+    width: '100%',
+    height: 400,
+    resizeMode: 'contain',
+    marginTop: -25,
+  },
+  page4phonenumberinput: {
+    textAlign: 'center',
+    fontSize: 18,
+    height: 66,
+    width: 233,
+    backgroundColor: 'white',
+    borderRadius: 30,
+    marginTop: 20,
+  },
+  page4otpbutton: {
+    backgroundColor: '#FCCF08',
+    height: 66,
+    width: 201,
+    borderRadius: 30,
+    marginTop: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  page4termscontainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 160,
+    paddingBottom: 20,
+  },
+  page4termscontainer2: {
+    alignItems: 'center',
+  },
+  page4text: {
+    fontSize: 10,
+    color: 'white',
+  },
+  page4botttomborder: {
+    marginTop: 5,
+    width: 218,
+    borderBottomColor: '#838383',
+    borderBottomWidth: 1,
+  },
+  page5container: {
+    flexDirection: 'column',
+    flex: 1,
+    backgroundColor: '#FCCF08',
+    marginTop: Platform.OS === 'android' ? 0 : 0,
+    overflow: 'hidden',
+  },
+
+  profileimgcontainer: {
+    width: '100%',
+    height: windowHeight,
+    resizeMode: 'cover',
+  },
+  page5heading: {
+    alignItems: 'center',
+    marginTop: 60,
+  },
+  page5headingotp: {
+    fontSize: 28,
+    color: '#fff',
+  },
+  page5headingotp2: {
+    fontSize: 14,
+    textAlign: 'center',
+    color: '#FFFFFF',
+    width: 250,
+    marginTop: 20,
+  },
+  page5otpcontainer: {
+    height: 200,
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  page5buttoncontainer: {
+    marginTop: 100,
+    alignItems: 'center',
+  },
+  page5Verifynowcontainer: {
+    width: 233,
+    height: 66,
+    backgroundColor: '#3C2022',
+    borderRadius: 50,
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  page5Verifynowbutton: {
+    color: '#FFFFFF',
+    fontSize: 18,
+  },
+  page5Resendcodebutton: {
+    color: '#000000',
+    marginTop: 10,
+    fontSize: 14,
+    opacity: 0.66,
+  },
+  textInput: {
+    backgroundColor: '#FCCF08',
+    fontWeight: '600',
+    alignSelf: 'center',
+    padding: 10,
+    fontSize: 20,
+    height: 55,
+    width: '14.5%',
+    margin: 12,
+    borderRadius: 10,
+    borderWidth: 0.7,
+    borderColor: '#3C2022',
+    alignItems: 'center',
+    textAlign: 'center',
   },
 });

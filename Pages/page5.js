@@ -19,21 +19,6 @@ import {Auth} from 'aws-amplify';
 const windowHeight = Dimensions.get('window').height;
 
 export default function Page({navigation, route}) {
-  const [onetimepass, setOneTimePass] = useState('');
-  const [ses, setses] = useState('');
-  const [user, setUser] = useState('');
-  const verifyOtp = () => {
-    Auth.sendCustomChallengeAnswer(ses, onetimepass)
-      .then((user) => {
-        console.log('wassup');
-        setUser(user);
-        setses(null);
-      })
-      .catch((err) => {
-        setOneTimePass('');
-        console.log(err);
-      });
-  };
   return (
     <SafeAreaView style={styles.page5container}>
       <ImageBackground
