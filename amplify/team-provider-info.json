@@ -1,0 +1,39 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-sigdiapp-dev-03011-authRole",
+      "UnauthRoleArn": "arn:aws:iam::707704252876:role/amplify-sigdiapp-dev-03011-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::707704252876:role/amplify-sigdiapp-dev-03011-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-sigdiapp-dev-03011-deployment",
+      "UnauthRoleName": "amplify-sigdiapp-dev-03011-unauthRole",
+      "StackName": "amplify-sigdiapp-dev-03011",
+      "StackId": "arn:aws:cloudformation:ap-south-1:707704252876:stack/amplify-sigdiapp-dev-03011/1cbc37c0-bbf9-11eb-ba6d-06c1027d650e",
+      "AmplifyAppId": "dr52elymhaj0j"
+    },
+    "categories": {
+      "function": {
+        "sigdiapp1c56e4b41c56e4b4CreateAuthChallenge": {
+          "CHALLENGEANSWER": "",
+          "deploymentBucketName": "amplify-sigdiapp-dev-03011-deployment",
+          "s3Key": "amplify-builds/sigdiapp1c56e4b41c56e4b4CreateAuthChallenge-73423861304948644a52-build.zip"
+        },
+        "sigdiapp1c56e4b41c56e4b4DefineAuthChallenge": {
+          "deploymentBucketName": "amplify-sigdiapp-dev-03011-deployment",
+          "s3Key": "amplify-builds/sigdiapp1c56e4b41c56e4b4DefineAuthChallenge-654458714a4750775537-build.zip"
+        },
+        "sigdiapp1c56e4b41c56e4b4PreSignup": {
+          "deploymentBucketName": "amplify-sigdiapp-dev-03011-deployment",
+          "s3Key": "amplify-builds/sigdiapp1c56e4b41c56e4b4PreSignup-673961625363574f564e-build.zip"
+        },
+        "sigdiapp1c56e4b41c56e4b4VerifyAuthChallengeResponse": {
+          "deploymentBucketName": "amplify-sigdiapp-dev-03011-deployment",
+          "s3Key": "amplify-builds/sigdiapp1c56e4b41c56e4b4VerifyAuthChallengeResponse-4c36392f67537133496e-build.zip"
+        }
+      },
+      "auth": {
+        "sigdiapp1c56e4b41c56e4b4": {}
+      }
+    }
+  }
+}
