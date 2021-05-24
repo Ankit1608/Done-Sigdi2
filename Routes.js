@@ -102,6 +102,7 @@ export default function Routes() {
   const signIn = (num) => {
     setMessage(VERIFYNUMBER);
     console.log('bl' + num);
+    setNumber(num);
     Auth.signIn(num)
       .then((result) => {
         setSession(result);
@@ -246,7 +247,6 @@ export default function Routes() {
                 onSubmit={(values) => {
                   console.warn('nkln');
                   let number = '+91' + values.phonenumber;
-                  setNumber(number);
                   signIn(number);
                 }}
                 validationSchema={validationSchema}>
@@ -344,10 +344,15 @@ export default function Routes() {
                           </Text>
                         </View>
                       </Pressable>
-
-                      <Text style={styles.page5Resendcodebutton}>
-                        Resend code
-                      </Text>
+                      <Pressable
+                        onPress={() => {
+                          console.warn(number);
+                          signIn(number);
+                        }}>
+                        <Text style={styles.page5Resendcodebutton}>
+                          Resend code
+                        </Text>
+                      </Pressable>
                     </View>
                   </>
                 )}
