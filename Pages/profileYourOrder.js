@@ -1,22 +1,27 @@
-import React, { Component } from "react";
-import { Text, View, StyleSheet } from "react-native";
-import YourOrderComponent from "../component/yourOrderComponent";
+import React, {Component} from 'react';
+import {Text, View, StyleSheet, Pressable} from 'react-native';
+import YourOrderComponent from '../component/yourOrderComponent';
+import {useNavigation} from '@react-navigation/native';
 
-class ProfileYourOrder extends Component {
-  render() {
-    return (
-      <View style={styles.mainContainer}>
+function ProfileYourOrder() {
+  const navigation = useNavigation();
+  return (
+    <View style={styles.mainContainer}>
+      <Pressable
+        onPress={() => {
+          navigation.navigate('Rate Order');
+        }}>
         <YourOrderComponent />
-      </View>
-    );
-  }
+      </Pressable>
+    </View>
+  );
 }
-
 export default ProfileYourOrder;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    margin: 10,
-    marginTop: 30,
+    paddingHorizontal: 10,
+    flex: 1,
+    backgroundColor: 'white',
   },
 });

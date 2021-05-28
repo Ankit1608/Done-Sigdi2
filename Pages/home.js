@@ -112,7 +112,7 @@ const listing = [
   },
 ];
 
-function Home() {
+function Home({navigation}) {
   const [completeScrollBarHeight, setCompleteScrollBarHeight] = useState(1);
   const [visibleScrollBarHeight, setVisibleScrollBarHeight] = useState(0);
   const scrollIndicator = useRef(new Animated.Value(0)).current;
@@ -223,7 +223,7 @@ function Home() {
               keyExtractor={(listing) => listing.id.toString()}
               renderItem={({item}) => (
                 <TouchableWithoutFeedback
-                  onPress={() => this.props.navigation.navigate('Profile')}>
+                  onPress={() => navigation.navigate('Profile')}>
                   <Chefcard
                     title={item.title}
                     subtitle={item.subtitle}
@@ -297,7 +297,7 @@ function Home() {
               keyExtractor={(listing) => listing.id.toString()}
               renderItem={({item}) => (
                 <TouchableWithoutFeedback
-                  onPress={() => this.props.navigation.navigate('Profile')}>
+                  onPress={() => navigation.navigate('Profile')}>
                   <Card
                     title={item.title}
                     subtitle={item.subtitle}

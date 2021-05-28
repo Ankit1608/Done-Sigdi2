@@ -31,6 +31,8 @@ import SearchIcon from './assets/JSX_SVG/searchIcon';
 import ProfileIcon from './assets/JSX_SVG/profileicon';
 import OrderIcon from './assets/JSX_SVG/orderIcon';
 import SellDrawer from './Pages/selltabnavigation';
+import Sellerprofile from './Pages/sellerProfile';
+import Paymentpage from './Pages/paymentPage';
 import {
   Text,
   TextInput,
@@ -46,7 +48,9 @@ import {
 } from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {TouchableNativeFeedback} from 'react-native-gesture-handler';
+import RateOrder from './Pages/rateOrderPage';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import AddItem from './Pages/addItemScreen';
 
 const windowHeight = Dimensions.get('window').height;
 const NOTSIGNIN = 'You are NOT logged in';
@@ -58,6 +62,7 @@ const VERIFYNUMBER = 'Verifying number (Country code +XX needed)';
 export default function Routes() {
   const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
+  const Drawer = createDrawerNavigator();
   const [message, setMessage] = useState('Welcome to Demo');
   const [user, setUser] = useState(null);
   const [session, setSession] = useState(null);
@@ -205,14 +210,14 @@ export default function Routes() {
     </Stack.Navigator>
   );
   const sellStackNavigation = () => (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}>
-      <Stack.Screen name="Sell" component={Sell} />
-      <Stack.Screen name="Sellmainlanding" component={Sellmainlanding} />
-      <Stack.Screen name="Selltabnavigation" component={Selltabnavigation} />
+    <Stack.Navigator initialRouteName="Seller Profile">
+      <Stack.Screen
+        name="Seller Profile"
+        component={Sellerprofile}
+        options={{headerShown: false}}
+      />
       <Stack.Screen name="EditSellerProfile" component={EditSellerProfile} />
+      <Stack.Screen name="Add Item" component={AddItem} />
     </Stack.Navigator>
   );
   const profilelistStackNavigation = () => (
@@ -229,7 +234,23 @@ export default function Routes() {
       <Stack.Screen name="Address Book" component={ProfileAddress} />
       <Stack.Screen name="Bookmarks" component={ProfileBookmarks} />
       <Stack.Screen name="Your Orders" component={ProfileYourOrders} />
+      <Stack.Screen name="Rate Order" component={RateOrder} />
     </Stack.Navigator>
+  );
+
+  const Appdrawer = () => (
+    <Drawer.Navigator initialRouteName="Seller Profile">
+      <Drawer.Screen
+        name="Seller Profile"
+        component={sellStackNavigation}
+        options={{drawerLabel: 'Seller Profile'}}
+      />
+      <Drawer.Screen
+        name="Paymentpage"
+        component={Paymentpage}
+        options={{drawerLabel: 'Payment Details'}}
+      />
+    </Drawer.Navigator>
   );
   return (
     <NavigationContainer>
@@ -385,7 +406,7 @@ export default function Routes() {
           />
           <Tab.Screen
             name="Sell"
-            component={SellDrawer}
+            component={Appdrawer}
             options={{
               title: 'Sell',
               tabBarIcon: ({size, focused, color}) => {

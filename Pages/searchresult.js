@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,40 +10,41 @@ import {
   TextInput,
   FlatList,
   ScrollView,
-} from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import Card from "../component/card";
+} from 'react-native';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+
+import Card from '../component/card';
 
 const listing = [
   {
     id: 1,
-    title: "Sukhi da Dhaba",
-    subtitle: "Kadhi Bowl",
-    image: require("../assets/kadhi.png"),
-    profile: require("../assets/cook1.jpg"),
-    mark: require("../assets/veg.png"),
-    price: "50",
-    rating: "3.5",
+    title: 'Sukhi da Dhaba',
+    subtitle: 'Kadhi Bowl',
+    image: require('../assets/kadhi.png'),
+    profile: require('../assets/cook1.jpg'),
+    mark: require('../assets/veg.png'),
+    price: '50',
+    rating: '3.5',
   },
   {
     id: 2,
-    title: "Sukhi da Dhaba",
-    subtitle: "Kadhi Bowl",
-    image: require("../assets/kadhi.png"),
-    profile: require("../assets/cook1.jpg"),
-    mark: require("../assets/veg.png"),
-    price: "50",
-    rating: "3.5",
+    title: 'Sukhi da Dhaba',
+    subtitle: 'Kadhi Bowl',
+    image: require('../assets/kadhi.png'),
+    profile: require('../assets/cook1.jpg'),
+    mark: require('../assets/veg.png'),
+    price: '50',
+    rating: '3.5',
   },
   {
     id: 3,
-    title: "Sukhi da Dhaba",
-    subtitle: "Kadhi Bowl",
-    image: require("../assets/kadhi.png"),
-    profile: require("../assets/cook1.jpg"),
-    mark: require("../assets/veg.png"),
-    price: "50",
-    rating: "3.5",
+    title: 'Sukhi da Dhaba',
+    subtitle: 'Kadhi Bowl',
+    image: require('../assets/kadhi.png'),
+    profile: require('../assets/cook1.jpg'),
+    mark: require('../assets/veg.png'),
+    price: '50',
+    rating: '3.5',
   },
 ];
 
@@ -53,16 +54,15 @@ export default class App extends Component {
       <SafeAreaView style={styles.container}>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        >
+          showsHorizontalScrollIndicator={false}>
           <View style={styles.topcontainer}>
             <Image
-              source={require("../assets/arrow.png")}
+              source={require('../assets/arrow.png')}
               style={styles.topcontainerimg}
             />
             <Text>kalyan nagar ph-3</Text>
             <Image
-              source={require("../assets/search2.png")}
+              source={require('../assets/search2.png')}
               style={styles.topcontainerimg2}
             />
           </View>
@@ -70,14 +70,14 @@ export default class App extends Component {
           <View style={styles.topcontainer2}>
             <View style={styles.fooddomefilterwrapper}>
               <Image
-                source={require("../assets/fooddome.png")}
+                source={require('../assets/fooddome.png')}
                 style={styles.topcontainer2img}
               />
               <Text>Search results for: Kadhi </Text>
             </View>
             <View style={styles.fooddomefilterwrapper}>
               <Image
-                source={require("../assets/filter.png")}
+                source={require('../assets/filter.png')}
                 style={styles.topcontainer2img2}
               />
               <Text>Filter</Text>
@@ -87,10 +87,9 @@ export default class App extends Component {
           <FlatList
             data={listing}
             keyExtractor={(listing) => listing.id.toString()}
-            renderItem={({ item }) => (
+            renderItem={({item}) => (
               <TouchableWithoutFeedback
-                onPress={() => this.props.navigation.navigate("Profile")}
-              >
+                onPress={() => this.props.navigation.navigate('Profile')}>
                 <Card
                   title={item.title}
                   subtitle={item.subtitle}
@@ -98,11 +97,9 @@ export default class App extends Component {
                   profile={item.profile}
                   mark={item.mark}
                   price={item.price}
-                  rating={item.rating}
-                ></Card>
+                  rating={item.rating}></Card>
               </TouchableWithoutFeedback>
-            )}
-          ></FlatList>
+            )}></FlatList>
         </ScrollView>
       </SafeAreaView>
     );
@@ -112,18 +109,17 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
-    marginTop: StatusBar.currentHeight,
-    overflow: "hidden",
-    alignContent: "center",
+    backgroundColor: 'white',
+    overflow: 'hidden',
+    alignContent: 'center',
     paddingHorizontal: 10,
   },
   topcontainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 1,
     padding: 20,
     paddingLeft: 0,
-    alignItems: "center",
+    alignItems: 'center',
     margin: 10,
     marginLeft: 5,
   },
@@ -135,19 +131,19 @@ const styles = StyleSheet.create({
   topcontainerimg2: {
     height: 17,
     width: 17,
-    marginLeft: "60%",
+    marginLeft: '60%',
   },
 
   topcontainer2: {
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 1,
-    justifyContent: "space-between",
-    alignItems: "center",
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 20,
   },
 
   fooddomefilterwrapper: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   topcontainer2img: {
     marginRight: 10,

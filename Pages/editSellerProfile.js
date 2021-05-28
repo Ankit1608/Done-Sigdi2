@@ -239,8 +239,8 @@ export default EditSellerProfile;
 
 const styles = StyleSheet.create({
   container: {
-    margin: 15,
-    marginTop: 30,
+    paddingHorizontal: 10,
+    backgroundColor: '#fff',
   },
   input: {
     borderBottomColor: '#C4C4C4',

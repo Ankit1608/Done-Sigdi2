@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, {Component, useState} from 'react';
 
 import {
   Modal,
@@ -8,20 +8,21 @@ import {
   View,
   Text,
   Image,
-} from "react-native";
+  Pressable,
+} from 'react-native';
 import {
   FlatList,
   ScrollView,
   TouchableHighlight,
   TouchableOpacity,
-} from "react-native-gesture-handler";
+} from 'react-native-gesture-handler';
 
-import CartItem from "../component/cartItem";
-import TimeSelection from "../component/timeSelection";
-import { Subscribe } from "unstated";
-import StateContainer from "../container/container";
+import CartItem from '../component/cartItem';
+import TimeSelection from '../component/timeSelection';
+import {Subscribe} from 'unstated';
+import StateContainer from '../container/container';
 
-const deviceHeight = Dimensions.get("window").height;
+const deviceHeight = Dimensions.get('window').height;
 
 export default class CartPopup extends Component {
   constructor(props) {
@@ -33,95 +34,91 @@ export default class CartPopup extends Component {
   }
 
   listing = [
-    { id: 1, time: "10 :00" },
-    { id: 2, time: "11 :00" },
-    { id: 3, time: "12 :00" },
-    { id: 4, time: "13 :00" },
-    { id: 5, time: "14 :00" },
-    { id: 6, time: "15 :00" },
-    { id: 7, time: "16 :00" },
-    { id: 8, time: "17 :00" },
-    { id: 9, time: "18 :00" },
-    { id: 10, time: "19 :00" },
-    { id: 11, time: "20 :00" },
-    { id: 12, time: "21 :00" },
+    {id: 1, time: '10 :00'},
+    {id: 2, time: '11 :00'},
+    {id: 3, time: '12 :00'},
+    {id: 4, time: '13 :00'},
+    {id: 5, time: '14 :00'},
+    {id: 6, time: '15 :00'},
+    {id: 7, time: '16 :00'},
+    {id: 8, time: '17 :00'},
+    {id: 9, time: '18 :00'},
+    {id: 10, time: '19 :00'},
+    {id: 11, time: '20 :00'},
+    {id: 12, time: '21 :00'},
   ];
   show = () => {
-    this.setState({ show: true });
+    this.setState({show: true});
   };
 
   close = () => {
-    this.setState({ show: false });
+    this.setState({show: false});
   };
 
   renderOutsideTouchable(onTouch) {
-    const view = <View style={{ flex: 1, width: "100%" }} />;
+    const view = <View style={{flex: 1, width: '100%'}} />;
     if (!onTouch) return view;
 
     return (
       <TouchableWithoutFeedback
         onPress={onTouch}
-        style={{ flex: 1, width: "100%" }}
-      >
+        style={{flex: 1, width: '100%'}}>
         {view}
       </TouchableWithoutFeedback>
     );
   }
 
   todaydate = () => {
-    this.setState({ day: false });
+    this.setState({day: false});
   };
 
   tomorrowdate = () => {
-    this.setState({ day: true });
+    this.setState({day: true});
   };
 
   render() {
-    let { show } = this.state;
-    const { onTouchOutside } = this.props;
+    let {show} = this.state;
+    const {onTouchOutside} = this.props;
     let deliveryCharges = 10;
     return (
       <Subscribe to={[StateContainer]}>
         {(statecontainer) => (
           <Modal
-            animationType={"fade"}
+            animationType={'fade'}
             transparent={true}
             visible={show}
-            onRequestClose={this.close}
-          >
+            onRequestClose={this.close}>
             <View
               style={{
                 flex: 1,
-                backgroundColor: "grey",
-                justifyContent: "flex-end",
-              }}
-            >
+                backgroundColor: 'grey',
+                justifyContent: 'flex-end',
+              }}>
               {this.renderOutsideTouchable(onTouchOutside)}
               <View
                 style={{
-                  backgroundColor: "#ffffff",
-                  width: "100%",
+                  backgroundColor: '#ffffff',
+                  width: '100%',
                   borderTopRightRadius: 10,
                   borderTopLeftRadius: 10,
                   paddingHorizontal: 10,
                   maxHeight: deviceHeight * 0.8,
-                }}
-              >
+                }}>
                 <View>
                   <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.locationContainer}>
                       <Image
-                        source={require("../assets/location.png")}
+                        source={require('../assets/location.png')}
                         style={styles.locationimg}
                       />
                       <Text style={styles.locationDelivery}>Delivery at </Text>
-                      <Text numberOfLines={1} style={{ maxWidth: "60%" }}>
+                      <Text numberOfLines={1} style={{maxWidth: '60%'}}>
                         Parmila Enclave, Kalyan Nagar Venture- 3, Hyderabad-18
                       </Text>
                     </View>
                     <View style={styles.clockContainer}>
                       <Image
-                        source={require("../assets/clock.png")}
+                        source={require('../assets/clock.png')}
                         style={styles.clockimg}
                       />
                       <Text style={styles.locationDelivery}>Delivery at </Text>
@@ -131,8 +128,9 @@ export default class CartPopup extends Component {
                       <FlatList
                         data={statecontainer.itemlist()}
                         keyExtractor={(list) => list.id.toString()}
-                        renderItem={({ item }) => <CartItem item={item} />}
-                      ></FlatList>
+                        renderItem={({item}) => (
+                          <CartItem item={item} />
+                        )}></FlatList>
                     </View>
                     <View style={styles.daycontainer}>
                       <TouchableWithoutFeedback onPress={this.todaydate}>
@@ -141,27 +139,25 @@ export default class CartPopup extends Component {
                             style={{
                               borderBottomWidth: 1.5,
                               borderBottomColor: this.state.day
-                                ? "#E0E0E0"
-                                : "#FCCF08",
-                            }}
-                          >
-                            Today{" "}
+                                ? '#E0E0E0'
+                                : '#FCCF08',
+                            }}>
+                            Today{' '}
                           </Text>
                         </View>
                       </TouchableWithoutFeedback>
 
-                      <Text style={{ color: "#838383" }}> | </Text>
+                      <Text style={{color: '#838383'}}> | </Text>
                       <TouchableWithoutFeedback onPress={this.tomorrowdate}>
                         <View>
                           <Text
                             style={{
                               borderBottomWidth: 1.5,
                               borderBottomColor: this.state.day
-                                ? "#FCCF08"
-                                : "#E0E0E0",
-                            }}
-                          >
-                            {" "}
+                                ? '#FCCF08'
+                                : '#E0E0E0',
+                            }}>
+                            {' '}
                             Tomorrow
                           </Text>
                         </View>
@@ -169,16 +165,14 @@ export default class CartPopup extends Component {
                     </View>
                     <ScrollView
                       horizontal
-                      showsHorizontalScrollIndicator={false}
-                    >
+                      showsHorizontalScrollIndicator={false}>
                       <FlatList
                         data={this.listing}
                         keyExtractor={(listing) => listing.id.toString()}
                         numColumns={6}
-                        renderItem={({ item }) => (
+                        renderItem={({item}) => (
                           <TimeSelection timeDisplay={item.time} />
-                        )}
-                      ></FlatList>
+                        )}></FlatList>
                     </ScrollView>
                     <View style={styles.tipContainer}>
                       <Text style={styles.tipHeader}>Tip your rider</Text>
@@ -188,54 +182,46 @@ export default class CartPopup extends Component {
                       </Text>
                       <View style={styles.tipAmountContainer}>
                         <TouchableWithoutFeedback
-                          onPress={() => statecontainer.setDeliveryTip(20)}
-                        >
+                          onPress={() => statecontainer.setDeliveryTip(20)}>
                           <Text
                             style={
                               statecontainer.state.deliveryTip === 20
                                 ? styles.tipAmountAct
                                 : styles.tipAmount
-                            }
-                          >
+                            }>
                             Rs.20
                           </Text>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback
-                          onPress={() => statecontainer.setDeliveryTip(30)}
-                        >
+                          onPress={() => statecontainer.setDeliveryTip(30)}>
                           <Text
                             style={
                               statecontainer.state.deliveryTip === 30
                                 ? styles.tipAmountAct
                                 : styles.tipAmount
-                            }
-                          >
+                            }>
                             Rs.30
                           </Text>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback
-                          onPress={() => statecontainer.setDeliveryTip(50)}
-                        >
+                          onPress={() => statecontainer.setDeliveryTip(50)}>
                           <Text
                             style={
                               statecontainer.state.deliveryTip === 50
                                 ? styles.tipAmountAct
                                 : styles.tipAmount
-                            }
-                          >
+                            }>
                             Rs.50
                           </Text>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback
-                          onPress={() => statecontainer.setDeliveryTip(0)}
-                        >
+                          onPress={() => statecontainer.setDeliveryTip(0)}>
                           <Text
                             style={
                               statecontainer.state.deliveryTip === 0
                                 ? styles.tipAmountAct
                                 : styles.tipAmount
-                            }
-                          >
+                            }>
                             None
                           </Text>
                         </TouchableWithoutFeedback>
@@ -269,19 +255,22 @@ export default class CartPopup extends Component {
                     <View style={styles.paymentUsing}>
                       <Text>Pay Using</Text>
                     </View>
-                    <View style={styles.paymentAmount}>
-                      <View>
-                        <Text style={{ color: "#ffffff" }}>
-                          {deliveryCharges +
-                            statecontainer.state.totalAmount +
-                            statecontainer.state.deliveryTip}
-                        </Text>
-                        <Text style={{ color: "#ffffff", fontSize: 10 }}>
-                          TOTAL
-                        </Text>
+                    <Pressable>
+                      <View style={styles.paymentAmount}>
+                        <View>
+                          <Text style={{color: '#ffffff'}}>
+                            {deliveryCharges +
+                              statecontainer.state.totalAmount +
+                              statecontainer.state.deliveryTip}
+                          </Text>
+                          <Text style={{color: '#ffffff', fontSize: 10}}>
+                            TOTAL
+                          </Text>
+                        </View>
+
+                        <Text style={{color: '#ffffff'}}>Proceed to Pay</Text>
                       </View>
-                      <Text style={{ color: "#ffffff" }}>Proceed to Pay</Text>
-                    </View>
+                    </Pressable>
                   </View>
                 </View>
               </View>
@@ -295,12 +284,12 @@ export default class CartPopup extends Component {
 
 const styles = StyleSheet.create({
   locationContainer: {
-    flexDirection: "row",
-    width: "100%",
+    flexDirection: 'row',
+    width: '100%',
     marginBottom: 10,
   },
   locationDelivery: {
-    color: "#838383",
+    color: '#838383',
   },
   locationimg: {
     height: 22,
@@ -313,24 +302,24 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   clockContainer: {
-    flexDirection: "row",
-    width: "100%",
+    flexDirection: 'row',
+    width: '100%',
     paddingBottom: 10,
     marginBottom: 10,
     borderBottomWidth: 0.8,
-    borderBottomColor: "#E0E0E0",
-    alignItems: "center",
+    borderBottomColor: '#E0E0E0',
+    alignItems: 'center',
   },
   itemContainer: {
     paddingBottom: 25,
     borderBottomWidth: 0.8,
-    borderBottomColor: "#E0E0E0",
+    borderBottomColor: '#E0E0E0',
   },
   daycontainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   tipContainer: {
-    backgroundColor: "#F5F4F4",
+    backgroundColor: '#F5F4F4',
   },
   tipHeader: {
     fontSize: 16,
@@ -345,27 +334,27 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   tipAmountContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   tipAmount: {
     padding: 5,
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     borderWidth: 0.5,
-    borderColor: "#C4C4C4",
+    borderColor: '#C4C4C4',
     borderRadius: 5,
     margin: 5,
-    color: "grey",
+    color: 'grey',
   },
   tipAmountAct: {
     padding: 5,
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     borderWidth: 0.5,
-    borderColor: "#FCCF08",
+    borderColor: '#FCCF08',
     borderRadius: 5,
     margin: 5,
-    color: "#FCCF08",
+    color: '#FCCF08',
   },
   billContainer: {
     margin: 10,
@@ -378,34 +367,34 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   billitem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingTop: 5,
   },
   billtotal: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   paymentContainer: {
-    flexDirection: "row",
-    position: "absolute",
-    width: "100%",
+    flexDirection: 'row',
+    position: 'absolute',
+    width: '100%',
     bottom: 0,
     borderRadius: 10,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   paymentUsing: {
     flex: 2,
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: "#c4c4c4",
+    borderColor: '#c4c4c4',
     padding: 15,
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
   },
   paymentAmount: {
     flex: 3,
-    flexDirection: "row",
-    backgroundColor: "#FCCF08",
+    flexDirection: 'row',
+    backgroundColor: '#FCCF08',
     padding: 15,
   },
 });

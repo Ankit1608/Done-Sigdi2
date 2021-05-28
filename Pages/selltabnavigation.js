@@ -1,47 +1,35 @@
-import React, {Component} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import {Container, Tab, Tabs} from 'native-base';
+import React from 'react';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createStackNavigator} from '@react-navigation/stack';
+
 import Sellerprofile from './sellerProfile';
 import Paymentpage from './paymentPage';
+import EditSellerProfile from './editSellerProfile';
 
-export class selltabnavigation extends Component {
-  render() {
+const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+function MyDrawer() {
+  function Root1() {
     return (
-      <Container>
-        <Tabs>
-          <Tab
-            heading="Profile"
-            activeTabStyle={{backgroundColor: '#763f43'}}
-            tabStyle={{backgroundColor: '#3C2022'}}>
-            <Sellerprofile navigation={this.props.navigation} />
-          </Tab>
-          <Tab
-            heading="Payments"
-            activeTabStyle={{backgroundColor: '#763f43'}}
-            tabStyle={{backgroundColor: '#3C2022'}}>
-            <Paymentpage />
-          </Tab>
-          <Tab
-            heading="Notifications"
-            activeTabStyle={{backgroundColor: '#763f43'}}
-            tabStyle={{backgroundColor: '#3C2022'}}></Tab>
-        </Tabs>
-      </Container>
+      <Stack.Navigator>
+        <Stack.Screen name="Seller Profile" component={Sellerprofile} />
+        <Stack.Screen name="EditSellerProfile" component={EditSellerProfile} />
+      </Stack.Navigator>
     );
   }
+  return (
+    <Drawer.Navigator initialRouteName="Feed">
+      <Drawer.Screen
+        name="Root"
+        component={Root1}
+        options={{drawerLabel: 'Seller Profile'}}
+      />
+      <Drawer.Screen
+        name="Paymentpage"
+        component={Paymentpage}
+        options={{drawerLabel: 'Payment Details'}}
+      />
+    </Drawer.Navigator>
+  );
 }
-
-export default selltabnavigation;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'green',
-  },
-  title: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-});
+export default MyDrawer;

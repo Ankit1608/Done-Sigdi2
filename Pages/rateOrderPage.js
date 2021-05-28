@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View, Image, TextInput } from "react-native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import React, {Component} from 'react';
+import {StyleSheet, Text, View, Image, TextInput} from 'react-native';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
-import YourOrderComponent from "../component/yourOrderComponent";
+import YourOrderComponent from '../component/yourOrderComponent';
 
 class RateOrder extends Component {
   state = {
@@ -10,7 +10,7 @@ class RateOrder extends Component {
   };
 
   handlerating(i) {
-    this.setState({ rating: i + 1 });
+    this.setState({rating: i + 1});
   }
 
   render() {
@@ -20,31 +20,27 @@ class RateOrder extends Component {
         starsContainer.push(
           <TouchableOpacity onPress={() => this.handlerating(i)}>
             <Image
-              source={require("../assets/star.png")}
+              source={require('../assets/star.png')}
               style={styles.starimg}
               key={i}
             />
-          </TouchableOpacity>
+          </TouchableOpacity>,
         );
       } else {
         starsContainer.push(
           <TouchableOpacity onPress={() => this.handlerating(i)}>
             <Image
-              source={require("../assets/stargray.png")}
+              source={require('../assets/stargray.png')}
               style={styles.starimg}
               key={i}
             />
-          </TouchableOpacity>
+          </TouchableOpacity>,
         );
       }
     }
     return (
       <View style={styles.mainContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.headingContainer}>
-            <Image source={require("../assets/editpencil.png")} />
-            <Text style={styles.headingText}>Your Orders</Text>
-          </View>
           <YourOrderComponent rating={true} />
           {true && (
             <View>
@@ -58,7 +54,7 @@ class RateOrder extends Component {
                   style={styles.review}
                   numberOfLines={15}
                   multiline={true}
-                  placeholder={"Write your review"}
+                  placeholder={'Write your review'}
                 />
               </View>
             </View>
@@ -70,26 +66,24 @@ class RateOrder extends Component {
                 style={styles.review}
                 numberOfLines={15}
                 multiline={true}
-                placeholder={"Write your concern"}
+                placeholder={'Write your concern'}
               />
             </View>
           )}
 
           <View
             style={{
-              alignItems: "center",
+              alignItems: 'center',
               marginTop: 30,
-            }}
-          >
+            }}>
             <View style={styles.savechangescontainer}>
               <Text
                 style={{
                   fontSize: 20,
                   paddingHorizontal: 25,
                   paddingVertical: 10,
-                  color: "#ffffff",
-                }}
-              >
+                  color: '#ffffff',
+                }}>
                 Submit
               </Text>
             </View>
@@ -104,23 +98,23 @@ export default RateOrder;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    margin: 15,
-    marginTop: 40,
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
   },
   headingContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   headingText: {
     fontSize: 16,
     marginLeft: 5,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   ratingContainer: {
     marginTop: 20,
   },
   starContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 20,
     marginBottom: 30,
   },
@@ -130,13 +124,13 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   review: {
-    alignItems: "flex-start",
-    textAlignVertical: "top",
+    alignItems: 'flex-start',
+    textAlignVertical: 'top',
     borderWidth: 1.5,
-    borderColor: "#F2F2F2",
+    borderColor: '#F2F2F2',
   },
   savechangescontainer: {
-    backgroundColor: "#FCCF08",
+    backgroundColor: '#FCCF08',
     borderRadius: 30,
   },
   concernContainer: {

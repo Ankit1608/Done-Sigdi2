@@ -6,115 +6,110 @@ import {
   Image,
   View,
   StatusBar,
-  TouchableNativeFeedback,
-  Pressable,
 } from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
-export default function Profilelist({navigation, route}) {
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.details}>
-        <Text style={styles.name}>Ankit Kumar</Text>
-        <View style={styles.details2}>
-          <Text style={styles.phonenumber}>8686959744</Text>
-          <Text style={styles.mail}>janedoe@gmail.com</Text>
+export default class App extends Component {
+  render() {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.details}>
+          <Text style={styles.name}>Ankit Kumar</Text>
+          <View style={styles.details2}>
+            <Text style={styles.phonenumber}>8686959744</Text>
+            <Text style={styles.mail}>janedoe@gmail.com</Text>
+          </View>
         </View>
-      </View>
-      <Text style={styles.profiletext}>YOUR PROFILE</Text>
-      <View style={styles.lists}>
-        <TouchableWithoutFeedback
-          onPress={() => this.props.navigation.navigate('Profileedit')}>
-          <View style={styles.listitem}>
-            <Image
-              style={styles.profilelisticoncontainer}
-              source={require('../assets/edit.png')}
-            />
-            <Text style={styles.listtext}>Edit Profile</Text>
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback
-          onPress={() => this.props.navigation.navigate('Profileaddress')}>
-          <View style={styles.listitem}>
-            <Image
-              style={styles.profilelisticoncontainer}
-              source={require('../assets/address.png')}
-            />
-            <Text style={styles.listtext}>Address Book</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
+        <Text style={styles.profiletext}>YOUR PROFILE</Text>
+        <View style={styles.lists}>
+          <TouchableWithoutFeedback
+            onPress={() => this.props.navigation.navigate('Edit Profile')}>
+            <View style={styles.listitem}>
+              <Image
+                style={styles.profilelisticoncontainer}
+                source={require('../assets/edit.png')}
+              />
+              <Text style={styles.listtext}>Edit Profile</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => this.props.navigation.navigate('Address Book')}>
+            <View style={styles.listitem}>
+              <Image
+                style={styles.profilelisticoncontainer}
+                source={require('../assets/address.png')}
+              />
+              <Text style={styles.listtext}>Address Book</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
 
-      <View style={styles.lists}>
-        <TouchableWithoutFeedback
-          onPress={() => this.props.navigation.navigate('Profilebookmarks')}>
+        <View style={styles.lists}>
+          <TouchableWithoutFeedback
+            onPress={() => this.props.navigation.navigate('Bookmarks')}>
+            <View style={styles.listitem}>
+              <Image
+                style={styles.profilelisticoncontainer2}
+                source={require('../assets/bookmark.png')}
+              />
+              <Text style={styles.listtext}>Book Marks</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <View style={styles.listitem}>
+            <Image
+              style={styles.profilelisticoncontainer}
+              source={require('../assets/notificationicon.png')}
+            />
+            <Text style={styles.listtext}>Notifications</Text>
+          </View>
+          <TouchableWithoutFeedback
+            onPress={() => this.props.navigation.navigate('Your Orders')}>
+            <View style={styles.listitem}>
+              <Image
+                style={styles.profilelisticoncontainer}
+                source={require('../assets/bag.png')}
+              />
+              <Text style={styles.listtext}>Your Orders</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+
+        <View style={styles.lists2}>
           <View style={styles.listitem}>
             <Image
               style={styles.profilelisticoncontainer2}
-              source={require('../assets/bookmark.png')}
+              source={require('../assets/about.png')}
             />
-            <Text style={styles.listtext}>Book Marks</Text>
+            <Text style={styles.listtext}>About</Text>
           </View>
-        </TouchableWithoutFeedback>
-        <View style={styles.listitem}>
-          <Image
-            style={styles.profilelisticoncontainer}
-            source={require('../assets/notificationicon.png')}
-          />
-          <Text style={styles.listtext}>Notifications</Text>
-        </View>
-        <TouchableWithoutFeedback
-          onPress={() => this.props.navigation.navigate('Profileyourorders')}>
           <View style={styles.listitem}>
             <Image
               style={styles.profilelisticoncontainer}
-              source={require('../assets/bag.png')}
+              source={require('../assets/feedback.png')}
             />
-            <Text style={styles.listtext}>Your Orders</Text>
+            <Text style={styles.listtext}>Send Feedback</Text>
           </View>
-        </TouchableWithoutFeedback>
-      </View>
-
-      <View style={styles.lists2}>
-        <View style={styles.listitem}>
-          <Image
-            style={styles.profilelisticoncontainer2}
-            source={require('../assets/about.png')}
-          />
-          <Text style={styles.listtext}>About</Text>
-        </View>
-        <View style={styles.listitem}>
-          <Image
-            style={styles.profilelisticoncontainer}
-            source={require('../assets/feedback.png')}
-          />
-          <Text style={styles.listtext}>Send Feedback</Text>
-        </View>
-        <View style={styles.listitem}>
-          <Image
-            style={styles.profilelisticoncontainer}
-            source={require('../assets/rating.png')}
-          />
-          <Text style={styles.listtext}>Rate us on Play Store</Text>
-        </View>
-        <Pressable
-          onPress={() => {
-            route.params.signOut();
-          }}>
+          <View style={styles.listitem}>
+            <Image
+              style={styles.profilelisticoncontainer}
+              source={require('../assets/rating.png')}
+            />
+            <Text style={styles.listtext}>Rate us on Play Store</Text>
+          </View>
           <View style={styles.listitem}>
             <Text style={styles.logout}>Log Out</Text>
           </View>
-        </Pressable>
-      </View>
-    </SafeAreaView>
-  );
+        </View>
+      </SafeAreaView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    marginTop: StatusBar.currentHeight,
+
     overflow: 'hidden',
     alignContent: 'center',
     //alignItems:"center",
@@ -131,24 +126,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   details2: {
-    flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 10,
   },
   phonenumber: {
-    flex: 1,
-    fontSize: 16,
+    fontSize: 14,
+    color: '#555',
   },
   mail: {
-    flex: 2,
-    fontSize: 16,
+    fontSize: 14,
+    color: '#555',
   },
   profiletext: {
     marginTop: 20,
     color: '#575757',
   },
   lists: {
-    paddingTop: 15,
-    paddingBottom: 15,
+    paddingTop: 10,
+    paddingBottom: 10,
     borderBottomWidth: 0.5,
     borderBottomColor: '#838383',
   },
@@ -157,8 +151,8 @@ const styles = StyleSheet.create({
   },
   listitem: {
     flexDirection: 'row',
-    marginBottom: 15,
-    marginTop: 15,
+    marginBottom: 12,
+    marginTop: 12,
   },
   listtext: {
     marginLeft: 10,

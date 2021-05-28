@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,12 +9,12 @@ import {
   TouchableHighlight,
   FlatList,
   ScrollView,
-} from "react-native";
+} from 'react-native';
 
-import { Subscribe } from "unstated";
+import {Subscribe} from 'unstated';
 
-import Ordercard from "../component/orderCard";
-import StateContainer from "../container/container";
+import Ordercard from '../component/orderCard';
+import StateContainer from '../container/container';
 
 export default class Menu extends Component {
   render() {
@@ -23,24 +23,42 @@ export default class Menu extends Component {
         {(statecontainer) => (
           <SafeAreaView style={styles.container}>
             <ScrollView>
-              <View style={styles.textContainer}>
-                <Text style={styles.topText}>Currently Available</Text>
+              <View>
+                <View style={styles.textContainer}>
+                  <Text style={styles.topText}>Currently Available</Text>
+                </View>
+                <FlatList
+                  data={statecontainer.state.listing}
+                  keyExtractor={(listing) => listing.id.toString()}
+                  renderItem={({item}) => (
+                    <Ordercard
+                      image={item.image}
+                      mark={item.mark}
+                      name={item.name}
+                      price={item.price}
+                      quantity={item.quantity}
+                      stock={item.stock}
+                      item={item}></Ordercard>
+                  )}></FlatList>
               </View>
-              <FlatList
-                data={statecontainer.state.listing}
-                keyExtractor={(listing) => listing.id.toString()}
-                renderItem={({ item }) => (
-                  <Ordercard
-                    image={item.image}
-                    mark={item.mark}
-                    name={item.name}
-                    price={item.price}
-                    quantity={item.quantity}
-                    stock={item.stock}
-                    item={item}
-                  ></Ordercard>
-                )}
-              ></FlatList>
+              <View>
+                <View style={styles.textContainer}>
+                  <Text style={styles.topText}>Pre Order</Text>
+                </View>
+                <FlatList
+                  data={statecontainer.state.listing}
+                  keyExtractor={(listing) => listing.id.toString()}
+                  renderItem={({item}) => (
+                    <Ordercard
+                      image={item.image}
+                      mark={item.mark}
+                      name={item.name}
+                      price={item.price}
+                      quantity={item.quantity}
+                      stock={item.stock}
+                      item={item}></Ordercard>
+                  )}></FlatList>
+              </View>
             </ScrollView>
           </SafeAreaView>
         )}
@@ -52,10 +70,10 @@ export default class Menu extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
 
-    overflow: "hidden",
-    alignContent: "center",
+    overflow: 'hidden',
+    alignContent: 'center',
     //alignItems:"center",
     marginHorizontal: 10,
     marginRight: 10,
@@ -64,11 +82,11 @@ const styles = StyleSheet.create({
   },
 
   textContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
 
   topText: {
     borderBottomWidth: 0.5,
-    borderBottomColor: "#c4c4c4",
+    borderBottomColor: '#c4c4c4',
   },
 });
